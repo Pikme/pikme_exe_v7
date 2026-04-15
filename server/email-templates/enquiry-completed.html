@@ -1,0 +1,65 @@
+<h1>✅ Booking Confirmed</h1>
+
+<p>Hi {{teamMemberName}},</p>
+
+<p>Congratulations! A booking has been confirmed for one of your enquiries.</p>
+
+<!-- Customer Details -->
+<div class="customer-details">
+    <h3>Customer Information</h3>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Name:</span>
+        <span class="customer-detail-value">{{customerName}}</span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Email:</span>
+        <span class="customer-detail-value"><a href="mailto:{{customerEmail}}">{{customerEmail}}</a></span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Phone:</span>
+        <span class="customer-detail-value"><a href="tel:{{customerPhone}}">{{customerPhone}}</a></span>
+    </div>
+</div>
+
+<!-- Booking Details -->
+<div class="info-box">
+    <div class="info-box-title">Booking Details</div>
+    <div class="info-box-content">
+        <p><strong>Tour:</strong> {{tourName}}</p>
+        <p><strong>Number of Travelers:</strong> {{numberOfTravelers}}</p>
+        {{#startDate}}<p><strong>Start Date:</strong> {{startDate}}</p>{{/startDate}}
+        {{#endDate}}<p><strong>End Date:</strong> {{endDate}}</p>{{/endDate}}
+        {{#bookingValue}}<p><strong>Booking Value:</strong> {{bookingValue}}</p>{{/bookingValue}}
+        <p><strong>Booking Status:</strong> <span class="badge success">Confirmed</span></p>
+    </div>
+</div>
+
+<!-- Action Button -->
+<div class="action-button-container">
+    <a href="{{actionUrl}}" class="action-button success">View Booking</a>
+</div>
+
+<!-- Next Steps -->
+<h2>What's Next?</h2>
+<p>The booking is now confirmed. Here are your next steps:</p>
+<ol style="margin-left: 20px; color: #555;">
+    <li>Send a confirmation email to the customer with booking details</li>
+    <li>Arrange payment collection if not already done</li>
+    <li>Prepare pre-travel information and itinerary</li>
+    <li>Set up a reminder for 2 weeks before the tour</li>
+</ol>
+
+<!-- Performance Note -->
+<div class="info-box">
+    <div class="info-box-title">Your Performance</div>
+    <div class="info-box-content">
+        <p>Great work! This booking contributes to your conversion rate and helps us match you with more enquiries in the future.</p>
+        <p><strong>Your current conversion rate:</strong> {{conversionRate}}%</p>
+    </div>
+</div>
+
+<p style="margin-top: 30px; color: #999; font-size: 12px;">
+    <strong>Booking ID:</strong> {{bookingId}}<br>
+    <strong>Enquiry ID:</strong> {{enquiryId}}<br>
+    <strong>Confirmed at:</strong> {{confirmedAt}}
+</p>

@@ -1,0 +1,51 @@
+<h1>📝 Enquiry Update</h1>
+
+<p>Hi {{teamMemberName}},</p>
+
+<p>There's an update on one of your enquiries.</p>
+
+<!-- Customer Details -->
+<div class="customer-details">
+    <h3>Customer Information</h3>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Name:</span>
+        <span class="customer-detail-value">{{customerName}}</span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Email:</span>
+        <span class="customer-detail-value"><a href="mailto:{{customerEmail}}">{{customerEmail}}</a></span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Phone:</span>
+        <span class="customer-detail-value"><a href="tel:{{customerPhone}}">{{customerPhone}}</a></span>
+    </div>
+</div>
+
+<!-- Update Details -->
+<div class="info-box">
+    <div class="info-box-title">Update Details</div>
+    <div class="info-box-content">
+        <p><strong>Update Type:</strong> <span class="badge">{{updateType}}</span></p>
+        <p><strong>Update Message:</strong></p>
+        <p style="margin-top: 10px; padding: 10px; background-color: white; border-radius: 4px;">{{updateMessage}}</p>
+        <p style="margin-top: 10px; font-size: 12px; color: #999;"><strong>Updated at:</strong> {{updatedAt}}</p>
+    </div>
+</div>
+
+<!-- Action Button -->
+<div class="action-button-container">
+    <a href="{{actionUrl}}" class="action-button">View Enquiry</a>
+</div>
+
+<!-- Next Steps -->
+<h2>What's Next?</h2>
+<p>Please review this update and take appropriate action:</p>
+<ul style="margin-left: 20px; color: #555;">
+    <li>Review the customer's changes or additional information</li>
+    <li>Update your proposal if needed</li>
+    <li>Send a follow-up message to the customer</li>
+</ul>
+
+<p style="margin-top: 30px; color: #999; font-size: 12px;">
+    <strong>Enquiry ID:</strong> {{enquiryId}}
+</p>

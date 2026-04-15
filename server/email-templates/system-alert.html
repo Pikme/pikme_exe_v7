@@ -1,0 +1,46 @@
+<h1>⚠️ System Alert</h1>
+
+<p>Hi {{teamMemberName}},</p>
+
+<p>We're notifying you of an important system update or maintenance.</p>
+
+<!-- Alert Details -->
+<div class="info-box" style="border-left-color: {{alertColor}};">
+    <div class="info-box-title" style="color: {{alertColor}};">{{alertType}}</div>
+    <div class="info-box-content">
+        <p>{{alertMessage}}</p>
+        {{#startTime}}<p style="margin-top: 10px;"><strong>Start Time:</strong> {{startTime}}</p>{{/startTime}}
+        {{#endTime}}<p><strong>Expected Duration:</strong> {{duration}}</p>{{/endTime}}
+        {{#affectedServices}}<p><strong>Affected Services:</strong> {{affectedServices}}</p>{{/affectedServices}}
+    </div>
+</div>
+
+<!-- Impact Information -->
+{{#impact}}
+<div class="info-box">
+    <div class="info-box-title">Impact</div>
+    <div class="info-box-content">
+        <p>{{impact}}</p>
+    </div>
+</div>
+{{/impact}}
+
+<!-- Action Button -->
+{{#actionUrl}}
+<div class="action-button-container">
+    <a href="{{actionUrl}}" class="action-button">Learn More</a>
+</div>
+{{/actionUrl}}
+
+<!-- Support Note -->
+<div class="info-box">
+    <div class="info-box-title">Questions?</div>
+    <div class="info-box-content">
+        <p>If you have any questions or concerns about this alert, please contact our support team at <a href="mailto:support@pikmeusa.com" style="color: #0066cc; text-decoration: none;">support@pikmeusa.com</a></p>
+    </div>
+</div>
+
+<p style="margin-top: 30px; color: #999; font-size: 12px;">
+    <strong>Alert ID:</strong> {{alertId}}<br>
+    <strong>Sent at:</strong> {{sentAt}}
+</p>

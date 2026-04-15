@@ -1,0 +1,25 @@
+<h1>💬 Team Message</h1>
+
+<p>Hi {{teamMemberName}},</p>
+
+<p>You have a new message from {{senderName}}.</p>
+
+<!-- Message Details -->
+<div class="info-box">
+    <div class="info-box-title">Message from {{senderName}}</div>
+    <div class="info-box-content">
+        <p style="padding: 15px; background-color: white; border-radius: 4px; border-left: 3px solid #0066cc;">{{message}}</p>
+        {{#channel}}<p style="margin-top: 10px; font-size: 12px; color: #999;"><strong>Channel:</strong> {{channel}}</p>{{/channel}}
+        <p style="font-size: 12px; color: #999;"><strong>Sent at:</strong> {{sentAt}}</p>
+    </div>
+</div>
+
+<!-- Action Button -->
+<div class="action-button-container">
+    <a href="{{actionUrl}}" class="action-button">Reply to Message</a>
+</div>
+
+<!-- Footer Note -->
+<p style="margin-top: 30px; font-size: 12px; color: #999;">
+    This is an automated notification. You can manage your message notification settings in your <a href="{{settingsUrl}}" style="color: #0066cc; text-decoration: none;">notification preferences</a>.
+</p>

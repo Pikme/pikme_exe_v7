@@ -1,0 +1,94 @@
+<h1>🎉 New Enquiry Assigned</h1>
+
+<p>Hi {{teamMemberName}},</p>
+
+<p>Great news! A new booking enquiry has been assigned to you based on your expertise and availability.</p>
+
+<!-- Customer Details -->
+<div class="customer-details">
+    <h3>Customer Information</h3>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Name:</span>
+        <span class="customer-detail-value">{{customerName}}</span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Email:</span>
+        <span class="customer-detail-value"><a href="mailto:{{customerEmail}}">{{customerEmail}}</a></span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Phone:</span>
+        <span class="customer-detail-value"><a href="tel:{{customerPhone}}">{{customerPhone}}</a></span>
+    </div>
+    <div class="customer-detail-row">
+        <span class="customer-detail-label">Country:</span>
+        <span class="customer-detail-value">{{customerCountry}}</span>
+    </div>
+</div>
+
+<!-- Enquiry Details -->
+<div class="info-box">
+    <div class="info-box-title">Tour Details</div>
+    <div class="info-box-content">
+        <p><strong>Tour:</strong> {{tourName}}</p>
+        <p><strong>Number of Travelers:</strong> {{numberOfTravelers}}</p>
+        {{#preferredStartDate}}<p><strong>Preferred Start Date:</strong> {{preferredStartDate}}</p>{{/preferredStartDate}}
+        {{#preferredEndDate}}<p><strong>Preferred End Date:</strong> {{preferredEndDate}}</p>{{/preferredEndDate}}
+        {{#specialRequests}}<p><strong>Special Requests:</strong> {{specialRequests}}</p>{{/specialRequests}}
+    </div>
+</div>
+
+<!-- Matching Score -->
+<div class="info-box">
+    <div class="info-box-title">Assignment Score</div>
+    <div class="info-box-content">
+        <p>This enquiry was matched to you with a <strong>{{matchingScore}}% compatibility score</strong> based on:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>Your expertise in {{tourCategory}}</li>
+            <li>Your current workload</li>
+            <li>Your availability</li>
+            <li>Your historical conversion rate</li>
+            <li>Language requirements</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="action-button-container">
+    <a href="{{actionUrl}}" class="action-button">View Full Enquiry</a>
+</div>
+
+<!-- Quick Actions -->
+<div style="text-align: center; margin: 20px 0;">
+    <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Quick Actions:</p>
+    <div class="quick-actions">
+        <a href="{{acceptUrl}}" class="quick-action-btn" style="background-color: #e8f5e9; color: #28a745; border-color: #28a745;">✓ Accept</a>
+        <a href="{{deferUrl}}" class="quick-action-btn" style="background-color: #fff3e0; color: #ff9800; border-color: #ff9800;">⏱ Defer</a>
+        <a href="{{viewUrl}}" class="quick-action-btn">→ View Details</a>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Next Steps -->
+<h2>What's Next?</h2>
+<p>We recommend responding to this enquiry within 2 hours to maximize conversion. Here's what you should do:</p>
+<ol style="margin-left: 20px; color: #555;">
+    <li>Review the customer's requirements and special requests</li>
+    <li>Check tour availability for the requested dates</li>
+    <li>Send a personalized response with tour options and pricing</li>
+    <li>Follow up within 24 hours if needed</li>
+</ol>
+
+<!-- Support Note -->
+<div class="info-box">
+    <div class="info-box-title">Need Help?</div>
+    <div class="info-box-content">
+        <p>If you need to defer this enquiry or have any questions, you can manage your preferences in your <a href="{{settingsUrl}}" style="color: #0066cc; text-decoration: none;">notification settings</a>.</p>
+    </div>
+</div>
+
+<p style="margin-top: 30px; color: #999; font-size: 12px;">
+    <strong>Assignment ID:</strong> {{enquiryId}}<br>
+    <strong>Assigned at:</strong> {{assignedAt}}<br>
+    <strong>Matching Score:</strong> {{matchingScore}}%
+</p>
