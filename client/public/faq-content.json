@@ -1,0 +1,54 @@
+{
+  "faqs": [
+    {
+      "id": 1,
+      "question": "What is the best time to visit Kerala for a tour?",
+      "answer": "The best time to visit Kerala is from September to March when the weather is pleasant and dry. The monsoon season (June-August) offers lush green landscapes and is ideal for budget travelers. Peak season (December-February) provides the best weather but comes with higher prices. Each season offers unique experiences—monsoon for rejuvenation, winter for sightseeing, and summer for adventure activities."
+    },
+    {
+      "id": 2,
+      "question": "Do I need a visa to visit India for tourism?",
+      "answer": "Most international visitors need a visa to enter India. However, citizens of several countries can apply for an e-Visa online, which is valid for tourism, business, and medical purposes. The e-Visa is typically processed within 4 business days and is valid for 1 or 5 years depending on the type. We recommend checking the official Indian government website or consulting with our travel experts for your specific country's visa requirements."
+    },
+    {
+      "id": 3,
+      "question": "What is included in your tour packages?",
+      "answer": "Our comprehensive tour packages typically include accommodation at 3-5 star hotels, daily breakfast, guided sightseeing tours, transportation between destinations, and entrance fees to major attractions. Some packages also include meals, adventure activities, and special experiences. Each package is customizable based on your preferences and budget. We recommend reviewing the detailed itinerary for each tour to see exactly what's included."
+    },
+    {
+      "id": 4,
+      "question": "How many days should I plan for a Kerala tour?",
+      "answer": "A typical Kerala tour can range from 3-7 days depending on your interests. A 3-day tour covers major highlights like Munnar tea gardens and Thekkady wildlife. A 5-7 day tour allows you to explore multiple destinations including backwaters, beaches, and hill stations. We recommend at least 5 days to experience Kerala's diverse attractions without feeling rushed. Longer tours provide more immersive experiences and time for relaxation."
+    },
+    {
+      "id": 5,
+      "question": "What activities are available in Munnar?",
+      "answer": "Munnar offers diverse activities including tea garden tours, trekking through misty hills, visiting waterfalls like Attukal and Cheeyappara, boating in lakes, and exploring spice plantations. Adventure enthusiasts can enjoy rock climbing, paragliding, and mountain biking. For relaxation, there are spa treatments and nature walks. The region is perfect for photography, bird watching, and experiencing authentic Kerala hill station culture."
+    },
+    {
+      "id": 6,
+      "question": "Is it safe to travel to India as a solo traveler?",
+      "answer": "India is generally safe for solo travelers, especially when following basic precautions. Popular tourist destinations like Kerala, Goa, and Rajasthan have well-established tourism infrastructure. We recommend traveling with reputable tour operators, staying in established accommodations, and using registered taxis or our arranged transportation. Women solo travelers should take extra precautions like avoiding late-night travel alone. Our experienced guides and support team ensure your safety throughout your journey."
+    },
+    {
+      "id": 7,
+      "question": "What is the average cost of a tour package?",
+      "answer": "Tour package costs vary based on destination, duration, accommodation quality, and season. Budget packages start from ₹15,000-25,000 for 3-4 days, mid-range packages from ₹25,000-50,000, and luxury packages from ₹50,000 and above. Prices are lower during off-season (April-May, September-October) and higher during peak season (December-February). We offer customizable packages to fit various budgets and provide transparent pricing with no hidden charges."
+    },
+    {
+      "id": 8,
+      "question": "Can I customize my tour itinerary?",
+      "answer": "Absolutely! We specialize in bespoke travel experiences tailored to your preferences. You can modify destinations, duration, accommodation type, activities, and dining options. Whether you want adventure, relaxation, cultural immersion, or spiritual journeys, our travel experts will design a perfect itinerary. Contact us with your requirements and we'll create a personalized tour that matches your interests and budget perfectly."
+    },
+    {
+      "id": 9,
+      "question": "What is the cancellation policy for tour bookings?",
+      "answer": "Our flexible cancellation policy allows free cancellation up to 30 days before the tour date. Cancellations between 15-30 days incur a 25% charge, and cancellations within 15 days incur a 50% charge. For cancellations within 7 days, 100% of the booking amount is non-refundable. However, we offer travel insurance options that cover unforeseen circumstances. We recommend reviewing the detailed cancellation policy specific to your booking."
+    },
+    {
+      "id": 10,
+      "question": "How do I book a tour and what payment methods do you accept?",
+      "answer": "Booking is simple—browse our tour packages, select your preferred dates, and complete the online booking form. We accept all major credit cards, debit cards, bank transfers, and digital payment methods like PayPal and Google Pay. A 20% advance payment secures your booking, with the balance due 30 days before the tour. We also offer installment payment plans for bookings over ₹50,000. Our secure payment gateway ensures your financial information is protected."
+    }
+  ]
+}
