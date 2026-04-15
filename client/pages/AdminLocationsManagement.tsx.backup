@@ -1,0 +1,588 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, MapPin, Plus, Edit2, Trash2, X, Check, Download, Upload } from "lucide-react";
+import { Link } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
+import { useState, useEffect } from "react";
+import { z } from "zod";
+import { toast } from "sonner";
+import Papa from "papaparse";
+import { AdminLayout } from "@/components/AdminLayout";
+import { exportLocationsToCSV, generateFilename } from "@/lib/csvExport";
+import { BulkImportDialog } from "@/components/BulkImportDialog";
+import { BulkExportButton } from "@/components/BulkExportButton";
+
+const locationSchema = z.object({
+  countryId: z.coerce.number().min(1, "Country is required"),
+  name: z.string().min(1, "Location name is required"),
+  slug: z.string().min(1, "Slug is required"),
+  description: z.string().optional(),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
+});
+
+type LocationFormData = z.infer<typeof locationSchema>;
+
+export default function AdminLocationsManagement() {
+  const { user } = useAuth();
+  
+  // Redirect to admin if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Please log in to access admin features</p>
+      </div>
+    );
+  }
+
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [selectedCountryId, setSelectedCountryId] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(0);
+  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [formData, setFormData] = useState<LocationFormData>({
+    countryId: 0,
+    name: "",
+    slug: "",
+    description: "",
+    latitude: undefined,
+    longitude: undefined,
+  });
+
+  // Load all countries
+  const { data: countries, isLoading: countriesLoading } = trpc.countries.list.useQuery({ limit: 200 });
+  
+  // Auto-select first country on load
+  useEffect(() => {
+    if (countries && countries.length > 0 && selectedCountryId === 0) {
+      setSelectedCountryId(countries[0].id);
+    }
+  }, [countries, selectedCountryId]);
+
+  // Load locations for selected country
+  const { data: locationsFullText, isLoading: isLoadingFullText } = trpc.locations.searchFullText.useQuery(
+    {
+      search: searchTerm || undefined,
+      stateId: selectedCountryId || undefined,
+      limit: 100,
+      offset: page * 100,
+    },
+    { enabled: (selectedCountryId || 0) > 0 && searchTerm.length > 0 }
+  );
+
+  const { data: locations, isLoading: locationsLoading, refetch } = trpc.locations.listByCountry.useQuery(
+    { countryId: selectedCountryId || 1, limit: 100 },
+    { enabled: (selectedCountryId || 0) > 0 && searchTerm.length === 0 }
+  );
+
+  const { data: locationCount } = trpc.locations.searchFullTextCount.useQuery(
+    {
+      search: searchTerm || undefined,
+      stateId: selectedCountryId || undefined,
+    },
+    { enabled: (selectedCountryId || 0) > 0 && searchTerm.length > 0 }
+  );
+
+  const displayLocations = searchTerm.length > 0 ? locationsFullText : locations;
+  const isLoadingData = searchTerm.length > 0 ? isLoadingFullText : locationsLoading;
+
+  const createMutation = trpc.locations.create.useMutation({
+    onSuccess: () => {
+      toast.success("Location created successfully!");
+      refetch();
+      setShowForm(false);
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error(`Error creating location: ${error.message}`);
+    },
+  });
+
+  const updateMutation = trpc.locations.update.useMutation({
+    onSuccess: () => {
+      toast.success("Location updated successfully!");
+      refetch();
+      setShowForm(false);
+      setEditingId(null);
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error(`Error updating location: ${error.message}`);
+    },
+  });
+
+  const deleteMutation = trpc.locations.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Location deleted successfully!");
+      refetch();
+    },
+    onError: (error: any) => {
+      toast.error(`Error deleting location: ${error.message}`);
+    },
+  });
+
+  const resetForm = () => {
+    setFormData({
+      countryId: selectedCountryId || 0,
+      name: "",
+      slug: "",
+      description: "",
+      latitude: undefined,
+      longitude: undefined,
+    });
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingId(null);
+    resetForm();
+  };
+
+  const downloadCSVTemplate = () => {
+    const headers = ["countryId", "name", "slug", "description", "latitude", "longitude"];
+    const sampleData = [
+      ["1", "Kochi", "kochi", "A beautiful coastal city in Kerala", "9.9312", "76.2673"],
+      ["1", "Munnar", "munnar", "Hill station in Kerala", "10.5869", "77.0595"],
+    ];
+    const csvContent = [headers.join(","), ...sampleData.map((row) => row.map((cell) => `"${cell}"`).join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "locations_template.csv";
+    a.click();
+    window.URL.revokeObjectURL(url);
+    toast.success("CSV template downloaded!");
+  };
+
+  const handleCSVImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    Papa.parse(file, {
+      header: true,
+      complete: async (results: any) => {
+        try {
+          const locationsData = results.data.filter((row: any) => row.name && row.countryId);
+          
+          for (const location of locationsData) {
+            try {
+              const validated = locationSchema.parse({
+                countryId: Number(location.countryId),
+                name: location.name,
+                slug: location.slug || location.name.toLowerCase().replace(/\s+/g, "-"),
+                description: location.description || "",
+                latitude: location.latitude || "",
+                longitude: location.longitude || "",
+              });
+              await createMutation.mutateAsync(validated);
+            } catch (err) {
+              console.error("Error importing location:", location.name, err);
+            }
+          }
+          toast.success(`Imported ${locationsData.length} locations!`);
+          refetch();
+        } catch (error) {
+          toast.error("Error importing locations");
+          console.error(error);
+        }
+      },
+    });
+    e.target.value = "";
+  };
+
+  if (user?.role !== "admin") {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <Button asChild>
+            <Link href="/">Back to Home</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleEdit = (location: any) => {
+    setEditingId(location.id);
+    setFormData({
+      countryId: location.countryId || 0,
+      name: location.name,
+      slug: location.slug,
+      description: location.description || "",
+      latitude: location.latitude || "",
+      longitude: location.longitude || "",
+    });
+    setShowForm(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const validated = locationSchema.parse(formData);
+      if (editingId) {
+        await updateMutation.mutateAsync({ id: editingId, data: validated });
+      } else {
+        await createMutation.mutateAsync(validated);
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Validation failed");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (confirm("Are you sure you want to delete this location?")) {
+      await deleteMutation.mutateAsync({ id });
+    }
+  };
+
+  return (
+    <AdminLayout
+      title="Locations Management"
+      description="Manage destinations and cities for your tours"
+      breadcrumbs={[
+        { label: "Locations", href: "/admin/locations" },
+      ]}
+    >
+      <div className="space-y-8">
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <Button onClick={downloadCSVTemplate} variant="outline" className="gap-2">
+            <Download className="w-4 h-4" />
+            Download Template
+          </Button>
+          <Button
+            onClick={() => setShowImportDialog(true)}
+            variant="outline"
+            className="gap-2"
+          >
+            <Upload className="w-4 h-4" />
+            Bulk Import
+          </Button>
+          <BulkExportButton
+            countryId={selectedCountryId || undefined}
+            variant="outline"
+            className="gap-2"
+          />
+          <Button
+            onClick={() => {
+              if (editingId) {
+                setEditingId(null);
+                resetForm();
+              }
+              setShowForm(!showForm);
+            }}
+            className="gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            {editingId ? "Cancel Edit" : "Add New Location"}
+          </Button>
+        </div>
+
+        {/* Bulk Import Dialog */}
+        <BulkImportDialog
+          open={showImportDialog}
+          onOpenChange={setShowImportDialog}
+          countryId={selectedCountryId}
+          onImportSuccess={() => {
+            refetch();
+            setShowImportDialog(false);
+          }}
+        />
+
+        {/* Add/Edit Location Form */}
+        {showForm && (
+          <Card className="border-2 border-green-200">
+            <CardHeader>
+              <CardTitle>{editingId ? "Edit Location" : "Create New Location"}</CardTitle>
+              <CardDescription>
+                {editingId ? "Update location details below" : "Fill in the details to create a new destination"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Country *</label>
+                    {countriesLoading ? (
+                      <div className="w-full px-3 py-2 border rounded-lg bg-gray-100 flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Loading countries...
+                      </div>
+                    ) : (
+                      <select
+                        value={formData.countryId}
+                        onChange={(e) => setFormData({ ...formData, countryId: Number(e.target.value) })}
+                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                        required
+                      >
+                        <option value="0">Select Country</option>
+                        {countries && countries.length > 0 ? (
+                          countries.map((country: any) => (
+                            <option key={country.id} value={country.id}>
+                              {country.name}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No countries available</option>
+                        )}
+                      </select>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Location Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                      placeholder="e.g., Kochi"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Slug *</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.slug}
+                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                      placeholder="e.g., kochi"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Description</label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                    placeholder="Describe this location"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Latitude</label>
+                    <input
+                      type="text"
+                      value={formData.latitude || ""}
+                      onChange={(e) => setFormData({ ...formData, latitude: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                      placeholder="e.g., 9.9312"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Longitude</label>
+                    <input
+                      type="text"
+                      value={formData.longitude || ""}
+                      onChange={(e) => setFormData({ ...formData, longitude: e.target.value })}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+                      placeholder="e.g., 76.2673"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleCancel}
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={createMutation.isPending || updateMutation.isPending}
+                    className="gap-2 bg-green-600 hover:bg-green-700"
+                  >
+                    {createMutation.isPending || updateMutation.isPending ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Check className="w-4 h-4" />
+                    )}
+                    {editingId ? "Update Location" : "Create Location"}
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Country Filter */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Filter by Country</CardTitle>
+            <CardDescription>Select a country to view and manage its locations</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {countriesLoading ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Loading countries...
+              </div>
+            ) : (
+              <select
+                value={selectedCountryId}
+                onChange={(e) => {
+                  setSelectedCountryId(Number(e.target.value));
+                  setSearchTerm("");
+                  setPage(0);
+                }}
+                className="w-full md:w-64 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              >
+                <option value="0">Select a country to view locations</option>
+                {countries && countries.length > 0 ? (
+                  countries.map((country: any) => (
+                    <option key={country.id} value={country.id}>
+                      {country.name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No countries available</option>
+                )}
+              </select>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Search Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Search Locations</CardTitle>
+            <CardDescription>Use full-text search for faster results</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Search Term</label>
+                <input
+                  type="text"
+                  placeholder="Search by name, description..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setPage(0);
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              {searchTerm && locationCount !== undefined && (
+                <div className="flex justify-between items-center">
+                  <p className="text-sm text-gray-600">Found {locationCount} matching locations</p>
+                  <Button
+                    onClick={() => {
+                      const locationsToExport = displayLocations?.map((location: any) => ({
+                        id: location.id,
+                        name: location.name,
+                        slug: location.slug,
+                        description: location.description || "",
+                        country: location.country || "",
+                        latitude: location.latitude || "",
+                        longitude: location.longitude || "",
+                      })) || [];
+                      exportLocationsToCSV(locationsToExport, generateFilename("locations-export"));
+                    }}
+                    size="sm"
+                    variant="outline"
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Export CSV
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Locations List */}
+        <div className="space-y-4">
+          {isLoadingData ? (
+            <Card>
+              <CardContent className="flex items-center justify-center py-12">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2" />
+                  <p>Loading locations...</p>
+                </div>
+              </CardContent>
+            </Card>
+          ) : displayLocations && displayLocations.length > 0 ? (
+            <>
+              <div className="text-sm text-gray-600 mb-4">
+                Showing {displayLocations.length} location{displayLocations.length !== 1 ? 's' : ''}
+              </div>
+              {displayLocations.map((location: any) => (
+                <Card key={location.id} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="pt-6">
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <MapPin className="w-5 h-5 text-green-600" />
+                          <h3 className="text-xl font-bold">{location.name}</h3>
+                        </div>
+                        {location.description && (
+                          <p className="text-gray-600 mb-2">{location.description}</p>
+                        )}
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                          <span>Slug: <strong>{location.slug}</strong></span>
+                          {location.latitude && location.longitude && (
+                            <span>Coordinates: <strong>{location.latitude}, {location.longitude}</strong></span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+                        <Button
+                          onClick={() => handleEdit(location)}
+                          variant="outline"
+                          size="sm"
+                          className="gap-2"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => handleDelete(location.id)}
+                          variant="destructive"
+                          size="sm"
+                          className="gap-2"
+                          disabled={deleteMutation.isPending}
+                        >
+                          {deleteMutation.isPending ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                          Delete
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+          ) : (
+            <Card>
+              <CardContent className="flex items-center justify-center py-12">
+                <div className="text-center">
+                  <MapPin className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                  <p className="text-gray-500">
+                    {selectedCountryId ? "No locations found for this country" : "Select a country to view locations"}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+    </AdminLayout>
+  );
+}
