@@ -37,11 +37,17 @@
 
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script type="module" src="./src/main.tsx"></script>
+    <!-- Analytics script - only loaded if endpoint is defined -->
+    <script>
+      if (typeof window !== 'undefined' && '%VITE_ANALYTICS_ENDPOINT%' && '%VITE_ANALYTICS_ENDPOINT%' !== '%' + 'VITE_ANALYTICS_ENDPOINT' + '%') {
+        const script = document.createElement('script');
+        script.defer = true;
+        script.src = '%VITE_ANALYTICS_ENDPOINT%/umami';
+        script.setAttribute('data-website-id', '%VITE_ANALYTICS_WEBSITE_ID%');
+        document.body.appendChild(script);
+      }
+    </script>
   </body>
 
 </html>
