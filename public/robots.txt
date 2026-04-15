@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /private
+
+# Sitemap
+Sitemap: https://pikme.org/sitemap.xml
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# Request rate (pages per 10 seconds)
+Request-rate: 10/10s

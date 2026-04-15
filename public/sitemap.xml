@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Home Page -->
+  <url>
+    <loc>https://pikme.org</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Tours Page -->
+  <url>
+    <loc>https://pikme.org/tours</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org/tours" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es/tours" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr/tours" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org/tours" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Destinations Page -->
+  <url>
+    <loc>https://pikme.org/destinations</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org/destinations" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es/destinations" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr/destinations" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org/destinations" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Attractions Page -->
+  <url>
+    <loc>https://pikme.org/attractions</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org/attractions" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es/attractions" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr/attractions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org/attractions" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- States Page -->
+  <url>
+    <loc>https://pikme.org/states</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org/states" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es/states" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr/states" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org/states" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Categories Page -->
+  <url>
+    <loc>https://pikme.org/categories</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pikme.org/categories" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://pikme.org/es/categories" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pikme.org/fr/categories" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pikme.org/categories" />
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
