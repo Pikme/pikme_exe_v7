@@ -1,0 +1,90 @@
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
+import * as schema from "./drizzle/schema";
+
+const translationData: Record<string, Record<string, Record<string, string>>> = {
+  en: {
+    nav: { admin: "Admin", dashboard: "Dashboard", attractions: "Attractions", tours: "Tours", locations: "Locations", analytics: "Analytics", settings: "Settings", logout: "Logout", destinations: "Destinations", states: "States", categories: "Categories", login: "Login" },
+    common: { loading: "Loading...", error: "Error", success: "Success", cancel: "Cancel", save: "Save", delete: "Delete", edit: "Edit", add: "Add", search: "Search", filter: "Filter", export: "Export", import: "Import", back: "Back", next: "Next", previous: "Previous", close: "Close", confirm: "Confirm", language: "Language" },
+    dashboard: { title: "Dashboard", welcome: "Welcome to Admin Dashboard", stats: "Statistics", recentActivity: "Recent Activity", overview: "Overview" },
+    attractions: { title: "Attractions", list: "Attractions List", add: "Add Attraction", edit: "Edit Attraction", delete: "Delete Attraction", name: "Name", type: "Type", location: "Location", rating: "Rating", featured: "Featured", active: "Active", description: "Description", image: "Image", noResults: "No attractions found" },
+    tours: { title: "Tours", list: "Tours List", add: "Add Tour", edit: "Edit Tour", delete: "Delete Tour", name: "Name", duration: "Duration", price: "Price", destination: "Destination", description: "Description", noResults: "No tours found" },
+    locations: { title: "Locations", list: "Locations List", add: "Add Location", edit: "Edit Location", delete: "Delete Location", name: "Name", country: "Country", state: "State", description: "Description", noResults: "No locations found" },
+    analytics: { title: "Analytics", views: "Views", clicks: "Clicks", conversions: "Conversions", topAttractions: "Top Attractions", topTours: "Top Tours", trends: "Trends", period: "Period", lastMonth: "Last Month", lastQuarter: "Last Quarter", lastYear: "Last Year" },
+    settings: { title: "Settings", general: "General Settings", appearance: "Appearance", notifications: "Notifications", security: "Security", language: "Language", theme: "Theme", darkMode: "Dark Mode", lightMode: "Light Mode" },
+    message: { deleteConfirm: "Are you sure you want to delete this item?", saveSuccess: "Item saved successfully", deleteSuccess: "Item deleted successfully", error: "An error occurred", loading: "Please wait...", noData: "No data available" },
+    footer: { brand: "Pikme", description: "Discover handpicked travel experiences across the world", quickLinks: "Quick Links", company: "Company", about: "About Us", contact: "Contact", privacy: "Privacy Policy", allRights: "All rights reserved.", terms: "Terms of Service", cookies: "Cookie Policy" },
+  },
+  es: {
+    nav: { admin: "Administración", dashboard: "Panel de Control", attractions: "Atracciones", tours: "Tours", locations: "Ubicaciones", analytics: "Analítica", settings: "Configuración", logout: "Cerrar Sesión", destinations: "Destinos", states: "Estados", categories: "Categorias", login: "Iniciar Sesion" },
+    common: { loading: "Cargando...", error: "Error", success: "Éxito", cancel: "Cancelar", save: "Guardar", delete: "Eliminar", edit: "Editar", add: "Añadir", search: "Buscar", filter: "Filtrar", export: "Exportar", import: "Importar", back: "Atrás", next: "Siguiente", previous: "Anterior", close: "Cerrar", confirm: "Confirmar", language: "Idioma" },
+    dashboard: { title: "Panel de Control", welcome: "Bienvenido al Panel de Control", stats: "Estadísticas", recentActivity: "Actividad Reciente", overview: "Descripción General" },
+    attractions: { title: "Atracciones", list: "Lista de Atracciones", add: "Añadir Atracción", edit: "Editar Atracción", delete: "Eliminar Atracción", name: "Nombre", type: "Tipo", location: "Ubicación", rating: "Calificación", featured: "Destacado", active: "Activo", description: "Descripción", image: "Imagen", noResults: "No se encontraron atracciones" },
+    tours: { title: "Tours", list: "Lista de Tours", add: "Añadir Tour", edit: "Editar Tour", delete: "Eliminar Tour", name: "Nombre", duration: "Duración", price: "Precio", destination: "Destino", description: "Descripción", noResults: "No se encontraron tours" },
+    locations: { title: "Ubicaciones", list: "Lista de Ubicaciones", add: "Añadir Ubicación", edit: "Editar Ubicación", delete: "Eliminar Ubicación", name: "Nombre", country: "País", state: "Estado", description: "Descripción", noResults: "No se encontraron ubicaciones" },
+    analytics: { title: "Analítica", views: "Vistas", clicks: "Clics", conversions: "Conversiones", topAttractions: "Atracciones Principales", topTours: "Tours Principales", trends: "Tendencias", period: "Período", lastMonth: "Último Mes", lastQuarter: "Último Trimestre", lastYear: "Último Año" },
+    settings: { title: "Configuración", general: "Configuración General", appearance: "Apariencia", notifications: "Notificaciones", security: "Seguridad", language: "Idioma", theme: "Tema", darkMode: "Modo Oscuro", lightMode: "Modo Claro" },
+    message: { deleteConfirm: "¿Está seguro de que desea eliminar este elemento?", saveSuccess: "Elemento guardado correctamente", deleteSuccess: "Elemento eliminado correctamente", error: "Ocurrió un error", loading: "Por favor espere...", noData: "No hay datos disponibles" },
+    footer: { brand: "Pikme", description: "Descubre experiencias de viaje seleccionadas en todo el mundo", quickLinks: "Enlaces Rapidos", company: "Empresa", about: "Acerca de Nosotros", contact: "Contacto", privacy: "Politica de Privacidad", allRights: "Todos los derechos reservados.", terms: "Terminos de Servicio", cookies: "Politica de Cookies" },
+  },
+  fr: {
+    nav: { admin: "Administration", dashboard: "Tableau de Bord", attractions: "Attractions", tours: "Tours", locations: "Lieux", analytics: "Analytique", settings: "Paramètres", logout: "Déconnexion", destinations: "Destinations", states: "Etats", categories: "Categories", login: "Connexion" },
+    common: { loading: "Chargement...", error: "Erreur", success: "Succès", cancel: "Annuler", save: "Enregistrer", delete: "Supprimer", edit: "Modifier", add: "Ajouter", search: "Rechercher", filter: "Filtrer", export: "Exporter", import: "Importer", back: "Retour", next: "Suivant", previous: "Précédent", close: "Fermer", confirm: "Confirmer", language: "Langue" },
+    dashboard: { title: "Tableau de Bord", welcome: "Bienvenue au Tableau de Bord", stats: "Statistiques", recentActivity: "Activité Récente", overview: "Aperçu" },
+    attractions: { title: "Attractions", list: "Liste des Attractions", add: "Ajouter une Attraction", edit: "Modifier l'Attraction", delete: "Supprimer l'Attraction", name: "Nom", type: "Type", location: "Lieu", rating: "Évaluation", featured: "En Vedette", active: "Actif", description: "Description", image: "Image", noResults: "Aucune attraction trouvée" },
+    tours: { title: "Tours", list: "Liste des Tours", add: "Ajouter un Tour", edit: "Modifier le Tour", delete: "Supprimer le Tour", name: "Nom", duration: "Durée", price: "Prix", destination: "Destination", description: "Description", noResults: "Aucun tour trouvé" },
+    locations: { title: "Lieux", list: "Liste des Lieux", add: "Ajouter un Lieu", edit: "Modifier le Lieu", delete: "Supprimer le Lieu", name: "Nom", country: "Pays", state: "État", description: "Description", noResults: "Aucun lieu trouvé" },
+    analytics: { title: "Analytique", views: "Vues", clicks: "Clics", conversions: "Conversions", topAttractions: "Attractions Principales", topTours: "Tours Principaux", trends: "Tendances", period: "Période", lastMonth: "Dernier Mois", lastQuarter: "Dernier Trimestre", lastYear: "Dernière Année" },
+    settings: { title: "Paramètres", general: "Paramètres Généraux", appearance: "Apparence", notifications: "Notifications", security: "Sécurité", language: "Langue", theme: "Thème", darkMode: "Mode Sombre", lightMode: "Mode Clair" },
+    message: { deleteConfirm: "Êtes-vous sûr de vouloir supprimer cet élément ?", saveSuccess: "Élément enregistré avec succès", deleteSuccess: "Élément supprimé avec succès", error: "Une erreur s'est produite", loading: "Veuillez patienter...", noData: "Aucune donnée disponible" },
+    footer: { brand: "Pikme", description: "Decouvrez des experiences de voyage selectionnees dans le monde entier", quickLinks: "Liens Rapides", company: "Entreprise", about: "A Propos", contact: "Contact", privacy: "Politique de Confidentialite", allRights: "Tous droits reserves.", terms: "Conditions d Utilisation", cookies: "Politique sur les Cookies" },
+  },
+};
+
+async function seedTranslations() {
+  let connection;
+  try {
+    connection = await mysql.createConnection(process.env.DATABASE_URL || "");
+    const db = drizzle(connection);
+
+    console.log("Starting translation seed...");
+    let totalInserted = 0;
+
+    for (const [language, categories] of Object.entries(translationData)) {
+      console.log(`\nSeeding ${language} translations...`);
+
+      for (const [category, keys] of Object.entries(categories)) {
+        for (const [key, value] of Object.entries(keys)) {
+          const fullKey = `${category}.${key}`;
+
+          try {
+            await db.insert(schema.translations).values({
+              key: fullKey,
+              language: language as "en" | "es" | "fr",
+              value: value,
+              category: category,
+              description: `Translation for ${fullKey}`,
+              lastModifiedBy: 1,
+            });
+            totalInserted++;
+          } catch (e: any) {
+            if (!e.message.includes("Duplicate")) {
+              console.error(`Error inserting ${fullKey}:`, e.message);
+            }
+          }
+        }
+      }
+
+      console.log(`  ✓ Completed ${language} translations`);
+    }
+
+    console.log(`\n✓ Seed completed! Total translations inserted: ${totalInserted}`);
+  } catch (error) {
+    console.error("Error seeding translations:", error);
+  } finally {
+    if (connection) await connection.end();
+    process.exit(0);
+  }
+}
+
+seedTranslations();
