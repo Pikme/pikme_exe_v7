@@ -1,0 +1,2 @@
+ALTER TABLE `emailEngagementMetrics` ADD CONSTRAINT `emailEngagementMetrics_emailHistoryId_emailHistory_id_fk` FOREIGN KEY (`emailHistoryId`) REFERENCES `emailHistory`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `emailEngagementMetrics` ADD CONSTRAINT `emailEngagementMetrics_emailDeliveryTrackingId_emailDeliveryTracking_id_fk` FOREIGN KEY (`emailDeliveryTrackingId`) REFERENCES `emailDeliveryTracking`(`id`) ON DELETE no action ON UPDATE no action;

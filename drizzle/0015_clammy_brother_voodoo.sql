@@ -1,0 +1,1 @@
+ALTER TABLE `importLogs` MODIFY COLUMN `importType` enum('tours','locations','flights','activities','attractions') NOT NULL;

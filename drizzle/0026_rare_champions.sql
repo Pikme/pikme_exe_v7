@@ -1,0 +1,2 @@
+ALTER TABLE `reportSchedules` MODIFY COLUMN `timezone` text NOT NULL DEFAULT ('UTC');--> statement-breakpoint
+ALTER TABLE `reportSchedules` MODIFY COLUMN `attachmentFormat` text NOT NULL DEFAULT ('csv');
