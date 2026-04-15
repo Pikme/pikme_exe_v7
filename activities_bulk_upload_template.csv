@@ -1,0 +1,53 @@
+locationId,name,category,description,duration,price,difficulty,bestTime,image,inclusions,exclusions
+1,Sunrise Trek to Ujjain Temple,Trekking,"Experience the spiritual awakening with a guided trek to the ancient Ujjain Temple. This early morning adventure offers breathtaking views and a chance to connect with local culture.",2 Nights / 3 Days,5000,easy,October to March,https://example.com/sunrise-trek.jpg,"Guided tour
+Breakfast
+Water bottle
+Camera access","Accommodation
+Meals
+Transportation"
+1,Mahakal Temple Darshan,Religious,"Visit the sacred Mahakal Temple with an experienced guide. Learn about the rich history and spiritual significance of this 2000-year-old temple.",1 Night / 2 Days,3000,easy,Year-round,https://example.com/mahakal-temple.jpg,"Temple guide
+Prayer materials
+Prasad","Photography permit
+Meals"
+1,Adventure Water Sports,Water Sports,"Thrilling water sports activities including kayaking, jet skiing, and paddleboarding on the pristine waters of Ujjain.",3 Nights / 4 Days,12000,moderate,November to February,https://example.com/water-sports.jpg,"Equipment
+Safety gear
+Instructor
+Snacks","Meals
+Transportation
+Insurance"
+2,Khajuraho Temple Complex Tour,Historical,"Explore the stunning medieval temples of Khajuraho with intricate stone carvings and architectural marvels. A UNESCO World Heritage Site.",4 Nights / 5 Days,8000,moderate,October to March,https://example.com/khajuraho-temple.jpg,"Guided tour
+Entry fee
+Audio guide
+Snacks","Meals
+Hotel pickup
+Photography permit"
+2,Sunset at Ken River,Nature,"Watch the golden sunset over the Ken River while enjoying traditional local snacks and cultural performances.",2 Days / 1 Night,4000,easy,Year-round,https://example.com/ken-river-sunset.jpg,"Refreshments
+Seating area
+Photography guide","Meals
+Transportation"
+3,Varanasi Ghats Evening Aarti,Spiritual,"Witness the mesmerizing evening prayer ceremony at the sacred Varanasi Ghats. A spiritual and cultural experience like no other.",2 Nights / 3 Days,3500,easy,Year-round,https://example.com/varanasi-aarti.jpg,"Boat ride
+Guide
+Prasad
+Seating","Meals
+Hotel transfer"
+3,Ganges River Boat Cruise,Nature,"Peaceful boat cruise on the holy Ganges River with opportunities to see local wildlife and traditional fishing methods.",3 Days / 2 Nights,6000,easy,October to March,https://example.com/ganges-cruise.jpg,"Boat
+Guide
+Life jacket
+Snacks","Meals
+Photography permit"
+4,Jaipur City Palace Tour,Historical,"Explore the magnificent City Palace, a blend of Mughal and Indian architecture. Learn about the royal heritage of Jaipur.",3 Days / 2 Nights,5000,easy,Year-round,https://example.com/city-palace.jpg,"Guided tour
+Entry fee
+Audio guide","Meals
+Photography permit
+Hotel transfer"
+4,Hawa Mahal Photography Tour,Photography,"Professional photography tour of the iconic Hawa Mahal (Palace of Winds) with tips from experienced photographers.",2 Days / 1 Night,4500,easy,October to March,https://example.com/hawa-mahal.jpg,"Photography guide
+Tripod assistance
+Refreshments","Meals
+Professional editing"
+4,Desert Camel Safari,Adventure,"Experience the Thar Desert on camelback with traditional Rajasthani hospitality. Includes sunset views and cultural performances.",4 Days / 3 Nights,10000,moderate,November to February,https://example.com/camel-safari.jpg,"Camel ride
+Guide
+Dinner
+Cultural show
+Bonfire","Meals
+Hotel transfer
+Photography permit"
