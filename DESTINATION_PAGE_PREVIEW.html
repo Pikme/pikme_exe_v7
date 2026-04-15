@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India - Explore Destinations | Pikme Travel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f5f5f5, #f9f9f9);
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        
+        .section-subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .stats {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card-subtitle {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .cities-list {
+            margin-bottom: 1rem;
+        }
+        
+        .cities-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cities-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .city-tag {
+            background: #f0f9ff;
+            color: #0369a1;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid #bae6fd;
+        }
+        
+        .button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .button:hover {
+            background: #1d4ed8;
+        }
+        
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">← Back to Countries</div>
+    
+    <div class="header">
+        <h1>🇮🇳 India</h1>
+        <p>Discover the vibrant culture, ancient temples, and diverse landscapes of India</p>
+    </div>
+    
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">28</div>
+                <div class="stat-label">States & Territories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">284</div>
+                <div class="stat-label">Major Cities</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Featured Tours</div>
+            </div>
+        </div>
+        
+        <!-- Locations & Cities Section -->
+        <h2 class="section-title">Locations & Cities</h2>
+        <p class="section-subtitle">Explore 284 cities across 28 states in India</p>
+        
+        <div class="grid">
+            <!-- Karnataka Card -->
+            <div class="card">
+                <div class="card-title">📍 Karnataka</div>
+                <div class="card-subtitle">karnataka</div>
+                <div class="card-description">
+                    Experience the tech hub of India, coffee plantations, and historical sites in Karnataka
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (8):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Bangalore</span>
+                        <span class="city-tag">Mysore</span>
+                        <span class="city-tag">Coorg</span>
+                        <span class="city-tag">Hampi</span>
+                        <span class="city-tag">Mangalore</span>
+                        <span class="city-tag">+3 more</span>
+                    </div>
+                </div>
+                <button class="button">Explore Karnataka</button>
+            </div>
+            
+            <!-- Kerala Card -->
+            <div class="card">
+                <div class="card-title">📍 Kerala</div>
+                <div class="card-subtitle">kerala</div>
+                <div class="card-description">
+                    Explore the backwaters, beaches, and spice gardens of God's Own Country
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (7):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Kochi</span>
+                        <span class="city-tag">Thiruvananthapuram</span>
+                        <span class="city-tag">Munnar</span>
+                        <span class="city-tag">Alleppey</span>
+                        <span class="city-tag">Thekkady</span>
+                        <span class="city-tag">+2 more</span>
+                    </div>
+                </div>
+                <button class="button">Explore Kerala</button>
+            </div>
+            
+            <!-- Tamil Nadu Card -->
+            <div class="card">
+                <div class="card-title">📍 Tamil Nadu</div>
+                <div class="card-subtitle">tamil-nadu</div>
+                <div class="card-description">
+                    Discover ancient temples, arts, and the vibrant South Indian culture
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (9):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Chennai</span>
+                        <span class="city-tag">Madurai</span>
+                        <span class="city-tag">Ooty</span>
+                        <span class="city-tag">Kanyakumari</span>
+                        <span class="city-tag">Pondicherry</span>
+                        <span class="city-tag">+4 more</span>
+                    </div>
+                </div>
+                <button class="button">Explore Tamil Nadu</button>
+            </div>
+            
+            <!-- Goa Card -->
+            <div class="card">
+                <div class="card-title">📍 Goa</div>
+                <div class="card-subtitle">goa</div>
+                <div class="card-description">
+                    Relax on pristine beaches, explore Portuguese heritage, and enjoy vibrant nightlife
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (5):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Panaji</span>
+                        <span class="city-tag">Margao</span>
+                        <span class="city-tag">Calangute</span>
+                        <span class="city-tag">Palolem</span>
+                        <span class="city-tag">Arambol</span>
+                    </div>
+                </div>
+                <button class="button">Explore Goa</button>
+            </div>
+            
+            <!-- Rajasthan Card -->
+            <div class="card">
+                <div class="card-title">📍 Rajasthan</div>
+                <div class="card-subtitle">rajasthan</div>
+                <div class="card-description">
+                    Experience the desert palaces, forts, and the colorful culture of the Land of Kings
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (10):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Jaipur</span>
+                        <span class="city-tag">Udaipur</span>
+                        <span class="city-tag">Jodhpur</span>
+                        <span class="city-tag">Pushkar</span>
+                        <span class="city-tag">Jaisalmer</span>
+                        <span class="city-tag">+5 more</span>
+                    </div>
+                </div>
+                <button class="button">Explore Rajasthan</button>
+            </div>
+            
+            <!-- Uttar Pradesh Card -->
+            <div class="card">
+                <div class="card-title">📍 Uttar Pradesh</div>
+                <div class="card-subtitle">uttar-pradesh</div>
+                <div class="card-description">
+                    Visit the iconic Taj Mahal, sacred temples, and explore India's spiritual heartland
+                </div>
+                <div class="cities-list">
+                    <div class="cities-label">Cities (12):</div>
+                    <div class="cities-items">
+                        <span class="city-tag">Agra</span>
+                        <span class="city-tag">Lucknow</span>
+                        <span class="city-tag">Varanasi</span>
+                        <span class="city-tag">Mathura</span>
+                        <span class="city-tag">Ayodhya</span>
+                        <span class="city-tag">+7 more</span>
+                    </div>
+                </div>
+                <button class="button">Explore Uttar Pradesh</button>
+            </div>
+        </div>
+        
+        <!-- Featured Tours Section -->
+        <h2 class="section-title">Featured Tours in India</h2>
+        <p class="section-subtitle">Explore our curated selection of tours in India</p>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Golden Triangle Tour</div>
+                <div class="card-description">
+                    Experience Delhi, Agra, and Jaipur - India's most iconic destinations
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.9rem;">
+                    <span>Duration: <strong>7 days</strong></span>
+                    <span>From: <strong>₹25,000</strong></span>
+                </div>
+                <button class="button" style="margin-top: 1rem;">View Tour</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Kerala Backwaters Cruise</div>
+                <div class="card-description">
+                    Relax on traditional houseboats and explore the serene backwaters of Kerala
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.9rem;">
+                    <span>Duration: <strong>5 days</strong></span>
+                    <span>From: <strong>₹18,000</strong></span>
+                </div>
+                <button class="button" style="margin-top: 1rem;">View Tour</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Himalayan Adventure</div>
+                <div class="card-description">
+                    Trek through the majestic Himalayas and experience mountain culture
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.9rem;">
+                    <span>Duration: <strong>10 days</strong></span>
+                    <span>From: <strong>₹35,000</strong></span>
+                </div>
+                <button class="button" style="margin-top: 1rem;">View Tour</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
